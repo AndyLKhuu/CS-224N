@@ -247,9 +247,9 @@ class NMT(nn.Module):
         ###             - Append o_t to combined_outputs
         ###             - Update o_prev to the new o_t.
         for y_t in torch.split(Y,1, dim = 0):
-            y_t = torch.squeeze(y_t, dim = 0)
-            Ybar_t = torch.cat((y_t,o_prev),dim = 1)
-            dec_state, o_t, _ = self.step(Ybar_t,dec_state,enc_hiddens,enc_hiddens_proj,enc_masks)
+            y = torch.squeeze(y_t, dim = 0)
+            Ybar_t = torch.cat((y,o_prev),dim = 1)
+            dec_state, o_t, _ = self.step(Ybar_t, dec_state, enc_hiddens, enc_hiddens_proj, enc_masks)
             combined_outputs.append(o_t)
             o_prev = o_t
         ###     4. Use torch.stack to convert combined_outputs from a list length tgt_len of
